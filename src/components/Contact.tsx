@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 import { Mail, Send, Phone, MapPin } from 'lucide-react'
+import { validateName, isValidEmail, detectAttackPatterns } from '../lib/security'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -47,7 +48,40 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    const mailtoLink = `mailto:vedorabuildofficial@gmail.com?subject=Message from ${formData.name}&body=Name: ${formData.name}%0D%0AEmail: ${formData.email}%0D%0APhone: ${formData.phone}%0D%0ACompany: ${formData.company}%0D%0A%0D%0AProject Details:%0D%0A${formData.message}`
+
+    // Attack pattern detection
+    if (detectAttackPatterns(formData.name) || 
+        detectAttackPatterns(formData.email) || 
+        detectAttackPatterns(formData.message) ||
+        detectAttackPatterns(formData.company)) {
+      setStatus('Invalid input detected. Please check your submission.')
+      setTimeout(() => setStatus(''), 5000)
+      return
+    }
+
+    // Validate name
+    const nameValidation = validateName(formData.name)
+    if (!nameValidation.valid) {
+      setStatus(nameValidation.error || 'Invalid name')
+      setTimeout(() => setStatus(''), 5000)
+      return
+    }
+
+    // Validate email
+    if (!isValidEmail(formData.email)) {
+      setStatus('Please enter a valid email address')
+      setTimeout(() => setStatus(''), 5000)
+      return
+    }
+
+    // Sanitize inputs
+    const sanitizedName = nameValidation.sanitized
+    const sanitizedEmail = formData.email.trim()
+    const sanitizedPhone = formData.phone.trim()
+    const sanitizedCompany = formData.company.trim()
+    const sanitizedMessage = formData.message.trim()
+
+    const mailtoLink = `mailto:vedorabuildofficial@gmail.com?subject=Message from ${sanitizedName}&body=Name: ${sanitizedName}%0D%0AEmail: ${sanitizedEmail}%0D%0APhone: ${sanitizedPhone}%0D%0ACompany: ${sanitizedCompany}%0D%0A%0D%0AProject Details:%0D%0A${sanitizedMessage}`
     window.location.href = mailtoLink
     setStatus('Thank you for your message! We will respond within 16 hours.')
     setTimeout(() => setStatus(''), 5000)

@@ -3,6 +3,13 @@ import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 import { Star, MessageSquare, Send, Filter } from 'lucide-react'
 import { supabase } from '../lib/supabase'
+import { 
+  validateName, 
+  validateReviewText, 
+  isValidEmail, 
+  detectAttackPatterns,
+  formSubmissionLimiter 
+} from '../lib/security'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -189,16 +196,55 @@ export default function WallOfLove() {
     setStatus('idle')
     setErrorMessage('')
 
-    // Validation
-    if (!formData.name.trim() || !formData.email.trim() || !formData.review.trim()) {
-      setErrorMessage('Please fill in all required fields.')
+    // Rate limiting check
+    const emailKey = formData.email.trim()
+    if (!formSubmissionLimiter.canMakeRequest(emailKey)) {
+      setErrorMessage('Too many submission attempts. Please wait a moment before trying again.')
       setStatus('error')
       setSubmitting(false)
       return
     }
 
-    if (formData.review.length < 20 || formData.review.length > 1000) {
-      setErrorMessage('Review must be between 20 and 1,000 characters.')
+    // Attack pattern detection
+    if (detectAttackPatterns(formData.name) || 
+        detectAttackPatterns(formData.email) || 
+        detectAttackPatterns(formData.review) ||
+        detectAttackPatterns(formData.title || '')) {
+      setErrorMessage('Invalid input detected. Please check your submission.')
+      setStatus('error')
+      setSubmitting(false)
+      return
+    }
+
+    // Validate name
+    const nameValidation = validateName(formData.name)
+    if (!nameValidation.valid) {
+      setErrorMessage(nameValidation.error || 'Invalid name')
+      setStatus('error')
+      setSubmitting(false)
+      return
+    }
+
+    // Validate email
+    if (!isValidEmail(formData.email)) {
+      setErrorMessage('Please enter a valid email address')
+      setStatus('error')
+      setSubmitting(false)
+      return
+    }
+
+    // Validate review text
+    const reviewValidation = validateReviewText(formData.review)
+    if (!reviewValidation.valid) {
+      setErrorMessage(reviewValidation.error || 'Invalid review')
+      setStatus('error')
+      setSubmitting(false)
+      return
+    }
+
+    // Validate title if provided
+    if (formData.title && formData.title.length > 100) {
+      setErrorMessage('Review title must not exceed 100 characters')
       setStatus('error')
       setSubmitting(false)
       return
@@ -222,12 +268,12 @@ export default function WallOfLove() {
       const { error } = await supabase
         .from('reviews')
         .insert({
-          display_name: formData.name.trim(),
+          display_name: nameValidation.sanitized,
           email: formData.email.trim(),
           relationship: formData.relationship || null,
           rating: formData.rating,
           title: formData.title.trim() || null,
-          review_text: formData.review.trim(),
+          review_text: reviewValidation.sanitized,
           status: 'pending'
         })
 
