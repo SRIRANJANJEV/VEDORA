@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
+import { ExternalLink } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -10,33 +11,34 @@ export default function Projects() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Section fades and scales in
-      gsap.from(sectionRef.current, {
-        scale: 0.95,
-        opacity: 0,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 80%',
-          end: 'top 20%',
-          scrub: 0.3, // Reduced for smoother performance
-        }
-      })
-
-      // Cards fade in with scale
-      const cards = cardsRef.current?.querySelectorAll('.whirl-card')
-      cards?.forEach((card) => {
-        gsap.from(card, {
-          scale: 0.9,
+      // Section fades and scales in with improved animation
+      if (sectionRef.current) {
+        gsap.from(sectionRef.current, {
           opacity: 0,
-          y: 30,
-          rotation: 0,
-          rotationX: 0,
-          rotationY: 0,
+          y: 50,
+          duration: 1,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 80%',
+            end: 'top 20%',
+            scrub: 0.3,
+          }
+        })
+      }
+
+      // Cards fade in with staggered animation
+      const cards = cardsRef.current?.querySelectorAll('.whirl-card')
+      cards?.forEach((card, index) => {
+        gsap.from(card, {
+          opacity: 0,
+          y: 40,
+          duration: 0.8,
+          delay: index * 0.1,
           scrollTrigger: {
             trigger: card,
             start: 'top 85%',
             end: 'top 50%',
-            scrub: 0.3, // Reduced for smoother performance
+            scrub: 0.3,
           }
         })
       })
@@ -51,6 +53,7 @@ export default function Projects() {
     description: string
     technologies: string
     image: string
+    url?: string
   }> = [
     {
       title: 'Security Analysis Tools',
@@ -99,16 +102,26 @@ export default function Projects() {
   return (
     <div ref={sectionRef} id="projects" className="section">
       <div className="section-content">
-        <h2>
-          Featured Projects
-        </h2>
-        <p style={{ fontSize: '1.2rem', color: 'rgba(255,255,255,0.7)', textAlign: 'center', maxWidth: '800px', margin: '0 auto 3rem' }}>
-          Real-world solutions delivering measurable business impact
-        </p>
+        <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+          <h2 style={{ marginBottom: '1rem' }}>
+            Featured Projects
+          </h2>
+          <p style={{ 
+            fontSize: '1.2rem', 
+            color: 'rgba(255,255,255,0.7)', 
+            textAlign: 'center', 
+            maxWidth: '800px', 
+            margin: '0 auto',
+            lineHeight: 1.6
+          }}>
+            Real-world solutions delivering measurable business impact
+          </p>
+        </div>
+        
         <div ref={cardsRef} className="cards-grid">
           {projects.map((project, index) => (
             <div key={index} className="whirl-card">
-              <div style={{ position: 'relative', marginBottom: '1rem', borderRadius: '12px', overflow: 'hidden', aspectRatio: '16/9' }}>
+              <div className="image-container">
                 <img
                   src={project.image}
                   alt={project.title}
@@ -117,35 +130,61 @@ export default function Projects() {
                     width: '100%',
                     height: '100%',
                     objectFit: 'cover',
-                    transition: 'transform 0.3s ease',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'scale(1.05)'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'scale(1)'
                   }}
                 />
               </div>
-              <div style={{
-                fontSize: '0.75rem',
-                color: '#3b82f6',
-                marginBottom: '0.5rem',
-                textTransform: 'uppercase',
-                letterSpacing: '0.1em',
-                fontWeight: 600
-              }}>
-                {project.category}
+              
+              <div style={{ marginBottom: '1rem' }}>
+                <div style={{
+                  fontSize: '0.75rem',
+                  color: '#3b82f6',
+                  marginBottom: '0.5rem',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.1em',
+                  fontWeight: 600
+                }}>
+                  {project.category}
+                </div>
+                <h3 style={{ marginBottom: '0.75rem' }}>{project.title}</h3>
+                <p style={{ 
+                  fontSize: '0.95rem', 
+                  color: 'rgba(255,255,255,0.7)', 
+                  lineHeight: 1.6,
+                  marginBottom: '1rem'
+                }}>
+                  {project.description}
+                </p>
               </div>
-              <h3>{project.title}</h3>
-              <p style={{ marginBottom: '1rem' }}>{project.description}</p>
+              
               <div style={{
                 fontSize: '0.8rem',
                 color: 'rgba(255,255,255,0.5)',
                 borderTop: '1px solid rgba(255,255,255,0.1)',
-                paddingTop: '0.75rem'
+                paddingTop: '0.75rem',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center'
               }}>
-                {project.technologies}
+                <span>{project.technologies}</span>
+                {project.url && (
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      color: '#3b82f6',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.25rem',
+                      textDecoration: 'none',
+                      fontWeight: 500
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.color = '#60a5fa'}
+                    onMouseLeave={(e) => e.currentTarget.style.color = '#3b82f6'}
+                  >
+                    View <ExternalLink size={14} />
+                  </a>
+                )}
               </div>
             </div>
           ))}

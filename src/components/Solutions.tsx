@@ -11,33 +11,34 @@ export default function Solutions() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Section fades and scales in
-      gsap.from(sectionRef.current, {
-        scale: 0.95,
-        opacity: 0,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 80%',
-          end: 'top 20%',
-          scrub: 0.3, // Reduced for smoother performance
-        }
-      })
-
-      // Cards fade in with scale
-      const cards = cardsRef.current?.querySelectorAll('.whirl-card')
-      cards?.forEach((card) => {
-        gsap.from(card, {
-          scale: 0.9,
+      // Section fades and scales in with improved animation
+      if (sectionRef.current) {
+        gsap.from(sectionRef.current, {
           opacity: 0,
-          y: 30,
-          rotation: 0,
-          rotationX: 0,
-          rotationY: 0,
+          y: 50,
+          duration: 1,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 80%',
+            end: 'top 20%',
+            scrub: 0.3,
+          }
+        })
+      }
+
+      // Cards fade in with staggered animation
+      const cards = cardsRef.current?.querySelectorAll('.whirl-card')
+      cards?.forEach((card, index) => {
+        gsap.from(card, {
+          opacity: 0,
+          y: 40,
+          duration: 0.8,
+          delay: index * 0.1,
           scrollTrigger: {
             trigger: card,
             start: 'top 85%',
             end: 'top 50%',
-            scrub: 0.3, // Reduced for smoother performance
+            scrub: 0.3,
           }
         })
       })
@@ -93,16 +94,26 @@ export default function Solutions() {
   return (
     <div ref={sectionRef} id="solutions" className="section">
       <div className="section-content">
-        <h2>
-          Technical Solutions
-        </h2>
-        <p style={{ fontSize: '1.2rem', color: 'rgba(255,255,255,0.7)', textAlign: 'center', maxWidth: '800px', margin: '0 auto 3rem' }}>
-          Proven approaches to complex technical challenges
-        </p>
+        <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+          <h2 style={{ marginBottom: '1rem' }}>
+            Technical Solutions
+          </h2>
+          <p style={{ 
+            fontSize: '1.2rem', 
+            color: 'rgba(255,255,255,0.7)', 
+            textAlign: 'center', 
+            maxWidth: '800px', 
+            margin: '0 auto',
+            lineHeight: 1.6
+          }}>
+            Proven approaches to complex technical challenges
+          </p>
+        </div>
+        
         <div ref={cardsRef} className="cards-grid">
           {solutions.map((solution, index) => (
             <div key={index} className="whirl-card">
-              <div style={{ position: 'relative', marginBottom: '1rem', borderRadius: '12px', overflow: 'hidden', aspectRatio: '16/9' }}>
+              <div className="image-container">
                 <img
                   src={solution.image}
                   alt={solution.title}
@@ -111,19 +122,39 @@ export default function Solutions() {
                     width: '100%',
                     height: '100%',
                     objectFit: 'cover',
-                    transition: 'transform 0.3s ease',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'scale(1.05)'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'scale(1)'
                   }}
                 />
               </div>
-              <solution.icon size={32} style={{ marginBottom: '0.75rem', color: '#3b82f6' }} />
-              <h3>{solution.title}</h3>
-              <p>{solution.description}</p>
+              
+              <div style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '0.75rem', 
+                marginBottom: '1rem' 
+              }}>
+                <div style={{
+                  width: '48px',
+                  height: '48px',
+                  borderRadius: '12px',
+                  background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 4px 15px rgba(59, 130, 246, 0.3)'
+                }}>
+                  <solution.icon size={24} color="white" />
+                </div>
+                <h3 style={{ margin: 0, fontSize: '1.2rem' }}>{solution.title}</h3>
+              </div>
+              
+              <p style={{ 
+                fontSize: '0.95rem', 
+                color: 'rgba(255,255,255,0.7)', 
+                lineHeight: 1.7,
+                margin: 0
+              }}>
+                {solution.description}
+              </p>
             </div>
           ))}
         </div>

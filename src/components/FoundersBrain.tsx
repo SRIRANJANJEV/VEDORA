@@ -151,11 +151,12 @@ export default function FoundersBrain() {
       }}>
         <div style={{
           display: 'inline-block',
-          padding: '0.5rem 1.5rem',
+          padding: '0.75rem 2rem',
           background: 'rgba(59, 130, 246, 0.1)',
           border: '1px solid rgba(59, 130, 246, 0.3)',
           borderRadius: '9999px',
-          marginBottom: '2rem'
+          marginBottom: '2rem',
+          backdropFilter: 'blur(10px)'
         }}>
           <span style={{
             fontSize: '0.875rem',
@@ -174,6 +175,7 @@ export default function FoundersBrain() {
           color: 'white',
           marginBottom: '1.5rem',
           letterSpacing: '-0.02em',
+          lineHeight: 1.1,
           background: 'linear-gradient(135deg, #ffffff 0%, #60a5fa 100%)',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
@@ -187,7 +189,8 @@ export default function FoundersBrain() {
           fontWeight: 600,
           color: 'rgba(255, 255, 255, 0.9)',
           marginBottom: '2rem',
-          letterSpacing: '-0.01em'
+          letterSpacing: '-0.01em',
+          lineHeight: 1.3
         }}>
           Find Your People. Build Your Team. Bring Your Vision to Life.
         </h2>
@@ -209,15 +212,26 @@ export default function FoundersBrain() {
         margin: '0 auto',
         marginBottom: '8rem'
       }}>
-        <h3 style={{
-          fontSize: 'clamp(1.75rem, 3vw, 2.25rem)',
-          fontWeight: 700,
-          color: 'white',
-          textAlign: 'center',
-          marginBottom: '3rem'
-        }}>
-          The Platform
-        </h3>
+        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+          <h3 style={{
+            fontSize: 'clamp(1.75rem, 3vw, 2.25rem)',
+            fontWeight: 700,
+            color: 'white',
+            marginBottom: '1rem',
+            letterSpacing: '-0.02em'
+          }}>
+            The Platform
+          </h3>
+          <p style={{
+            fontSize: '1.1rem',
+            color: 'rgba(255, 255, 255, 0.7)',
+            maxWidth: '700px',
+            margin: '0 auto',
+            lineHeight: 1.6
+          }}>
+            Discover people, build teams, and bring your startup vision to life
+          </p>
+        </div>
 
         <div style={{
           display: 'grid',
@@ -225,37 +239,22 @@ export default function FoundersBrain() {
           gap: '2rem'
         }}>
           {features.map((feature, index) => (
-            <div key={index} className="feature-card" style={{
-              background: 'rgba(255, 255, 255, 0.03)',
-              backdropFilter: 'blur(10px)',
-              border: '1px solid rgba(255, 255, 255, 0.08)',
-              borderRadius: '20px',
-              padding: '2.5rem',
-              transition: 'all 0.3s ease'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)'
-              e.currentTarget.style.borderColor = 'rgba(59, 130, 246, 0.3)'
-              e.currentTarget.style.transform = 'translateY(-5px)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)'
-              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)'
-              e.currentTarget.style.transform = 'translateY(0)'
-            }}
-            >
+            <div key={index} className="whirl-card feature-card" style={{
+              padding: '2rem',
+              textAlign: 'center'
+            }}>
               <div style={{
-                width: '56px',
-                height: '56px',
+                width: '64px',
+                height: '64px',
                 borderRadius: '16px',
                 background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                marginBottom: '1.5rem',
+                margin: '0 auto 1.5rem',
                 boxShadow: '0 4px 20px rgba(59, 130, 246, 0.3)'
               }}>
-                <feature.icon size={28} color="white" />
+                <feature.icon size={32} color="white" />
               </div>
               <h4 style={{
                 fontSize: '1.25rem',
@@ -268,7 +267,8 @@ export default function FoundersBrain() {
               <p style={{
                 fontSize: '0.95rem',
                 color: 'rgba(255, 255, 255, 0.7)',
-                lineHeight: 1.7
+                lineHeight: 1.7,
+                margin: 0
               }}>
                 {feature.description}
               </p>
@@ -295,7 +295,8 @@ export default function FoundersBrain() {
             background: 'rgba(139, 92, 246, 0.1)',
             border: '1px solid rgba(139, 92, 246, 0.3)',
             borderRadius: '9999px',
-            marginBottom: '2rem'
+            marginBottom: '2rem',
+            backdropFilter: 'blur(10px)'
           }}>
             <Brain size={20} color="#8b5cf6" />
             <span style={{
@@ -313,7 +314,8 @@ export default function FoundersBrain() {
             fontSize: 'clamp(1.75rem, 3vw, 2.25rem)',
             fontWeight: 700,
             color: 'white',
-            marginBottom: '1.5rem'
+            marginBottom: '1.5rem',
+            letterSpacing: '-0.02em'
           }}>
             Your Startup. Your Team. Your AI Advantage.
           </h3>
@@ -335,70 +337,38 @@ export default function FoundersBrain() {
           gap: '2rem'
         }}>
           {aiAgents.map((agent, index) => (
-            <div key={index} className="ai-card" style={{
-              background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%)',
-              backdropFilter: 'blur(10px)',
-              border: '1px solid rgba(139, 92, 246, 0.2)',
-              borderRadius: '20px',
-              padding: '2.5rem',
-              transition: 'all 0.3s ease',
-              position: 'relative',
-              overflow: 'hidden'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(59, 130, 246, 0.1) 100%)'
-              e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.4)'
-              e.currentTarget.style.transform = 'translateY(-5px)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%)'
-              e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.2)'
-              e.currentTarget.style.transform = 'translateY(0)'
-            }}
-            >
+            <div key={index} className="whirl-card ai-card" style={{
+              padding: '2rem',
+              textAlign: 'center',
+              background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(59, 130, 246, 0.03) 100%)',
+              border: '1px solid rgba(139, 92, 246, 0.2)'
+            }}>
               <div style={{
-                position: 'absolute',
-                top: '0',
-                right: '0',
-                width: '100px',
-                height: '100px',
-                background: 'radial-gradient(circle, rgba(139, 92, 246, 0.2) 0%, transparent 70%)',
-                pointerEvents: 'none'
-              }} />
-              
-              <div style={{
-                width: '56px',
-                height: '56px',
+                width: '64px',
+                height: '64px',
                 borderRadius: '16px',
                 background: 'linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                marginBottom: '1.5rem',
-                boxShadow: '0 4px 20px rgba(139, 92, 246, 0.3)',
-                position: 'relative',
-                zIndex: 1
+                margin: '0 auto 1.5rem',
+                boxShadow: '0 4px 20px rgba(139, 92, 246, 0.3)'
               }}>
-                <agent.icon size={28} color="white" />
+                <agent.icon size={32} color="white" />
               </div>
-              
               <h4 style={{
                 fontSize: '1.25rem',
                 fontWeight: 600,
                 color: 'white',
-                marginBottom: '1rem',
-                position: 'relative',
-                zIndex: 1
+                marginBottom: '1rem'
               }}>
                 {agent.title}
               </h4>
-              
               <p style={{
                 fontSize: '0.95rem',
                 color: 'rgba(255, 255, 255, 0.7)',
                 lineHeight: 1.7,
-                position: 'relative',
-                zIndex: 1
+                margin: 0
               }}>
                 {agent.description}
               </p>
@@ -413,23 +383,22 @@ export default function FoundersBrain() {
         margin: '0 auto',
         marginBottom: '8rem'
       }}>
-        <div style={{
-          background: 'rgba(59, 130, 246, 0.05)',
-          backdropFilter: 'blur(10px)',
-          border: '1px solid rgba(59, 130, 246, 0.2)',
-          borderRadius: '24px',
+        <div className="whirl-card" style={{
           padding: '3rem',
-          textAlign: 'center'
+          textAlign: 'center',
+          background: 'rgba(59, 130, 246, 0.05)',
+          border: '1px solid rgba(59, 130, 246, 0.2)'
         }}>
           <div style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: '0.5rem',
-            padding: '0.5rem 1.25rem',
+            padding: '0.75rem 1.5rem',
             background: 'rgba(59, 130, 246, 0.2)',
             border: '1px solid rgba(59, 130, 246, 0.4)',
             borderRadius: '9999px',
-            marginBottom: '2rem'
+            marginBottom: '2rem',
+            backdropFilter: 'blur(10px)'
           }}>
             <Clock size={18} color="#3b82f6" />
             <span style={{
@@ -472,7 +441,8 @@ export default function FoundersBrain() {
           fontSize: 'clamp(1.75rem, 3vw, 2.25rem)',
           fontWeight: 700,
           color: 'white',
-          marginBottom: '1.5rem'
+          marginBottom: '1.5rem',
+          letterSpacing: '-0.02em'
         }}>
           The Future of Your Startup Starts With the Right Team.
         </h3>

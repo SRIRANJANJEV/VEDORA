@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
-import { ExternalLink } from 'lucide-react'
+import { ExternalLink, Link as LinkIcon } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -14,31 +14,30 @@ export default function Founders() {
       const ctx = gsap.context(() => {
         if (sectionRef.current) {
           gsap.from(sectionRef.current, {
-            scale: 0.95,
             opacity: 0,
+            y: 50,
+            duration: 1,
             scrollTrigger: {
               trigger: sectionRef.current,
               start: 'top 80%',
               end: 'top 20%',
-              scrub: 0.3, // Reduced for smoother performance
+              scrub: 0.3,
             }
           })
         }
 
         const cards = cardsRef.current?.querySelectorAll('.whirl-card')
-        cards?.forEach((card) => {
+        cards?.forEach((card, index) => {
           gsap.from(card, {
-            scale: 0.9,
             opacity: 0,
-            y: 30,
-            rotation: 0,
-            rotationX: 0,
-            rotationY: 0,
+            y: 40,
+            duration: 0.8,
+            delay: index * 0.1,
             scrollTrigger: {
               trigger: card,
               start: 'top 85%',
               end: 'top 50%',
-              scrub: 0.3, // Reduced for smoother performance
+              scrub: 0.3,
             }
           })
         })
@@ -101,16 +100,30 @@ export default function Founders() {
   return (
     <div ref={sectionRef} id="founders" className="section">
       <div className="section-content">
-        <h2>
-          Meet the Founders
-        </h2>
-        <p style={{ fontSize: '1.2rem', color: 'rgba(255,255,255,0.7)', textAlign: 'center', maxWidth: '800px', margin: '0 auto 3rem' }}>
-          Two student builders exploring the intersection of technology, security, and innovation
-        </p>
-        <div ref={cardsRef} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '3rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+          <h2 style={{ marginBottom: '1rem' }}>
+            Meet the Founders
+          </h2>
+          <p style={{ 
+            fontSize: '1.2rem', 
+            color: 'rgba(255,255,255,0.7)', 
+            textAlign: 'center', 
+            maxWidth: '800px', 
+            margin: '0 auto',
+            lineHeight: 1.6
+          }}>
+            Two student builders exploring the intersection of technology, security, and innovation
+          </p>
+        </div>
+
+        <div ref={cardsRef} style={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', 
+          gap: '2.5rem' 
+        }}>
           {founders.map((founder, index) => (
             <div key={index} className="whirl-card" style={{ textAlign: 'center' }}>
-              {/* Avatar placeholder */}
+              {/* Avatar */}
               <div style={{
                 width: '120px',
                 height: '120px',
@@ -123,24 +136,57 @@ export default function Founders() {
                 fontSize: '2.5rem',
                 fontWeight: 'bold',
                 color: 'white',
-                boxShadow: '0 4px 20px rgba(59, 130, 246, 0.3)'
+                boxShadow: '0 4px 20px rgba(59, 130, 246, 0.3)',
+                border: '3px solid rgba(255, 255, 255, 0.1)'
               }}>
                 {getInitials(founder.name)}
               </div>
 
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>{founder.name}</h3>
-              <p style={{ fontSize: '0.95rem', color: '#3b82f6', marginBottom: '1.5rem', fontWeight: 500 }}>
+              <h3 style={{ 
+                fontSize: '1.5rem', 
+                marginBottom: '0.5rem',
+                color: 'white'
+              }}>
+                {founder.name}
+              </h3>
+              
+              <p style={{ 
+                fontSize: '0.95rem', 
+                color: '#3b82f6', 
+                marginBottom: '1.5rem', 
+                fontWeight: 500,
+                lineHeight: 1.4
+              }}>
                 {founder.headline}
               </p>
-              <p style={{ fontSize: '0.95rem', color: 'rgba(255,255,255,0.8)', lineHeight: '1.7', marginBottom: '1.5rem' }}>
+              
+              <p style={{ 
+                fontSize: '0.95rem', 
+                color: 'rgba(255,255,255,0.8)', 
+                lineHeight: '1.7', 
+                marginBottom: '1.5rem',
+                textAlign: 'left'
+              }}>
                 {founder.bio}
               </p>
 
               <div style={{ marginBottom: '1.5rem' }}>
-                <h4 style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.6)', marginBottom: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                <h4 style={{ 
+                  fontSize: '0.85rem', 
+                  color: 'rgba(255,255,255,0.6)', 
+                  marginBottom: '0.75rem', 
+                  textTransform: 'uppercase', 
+                  letterSpacing: '0.05em',
+                  textAlign: 'center'
+                }}>
                   Core Interests
                 </h4>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'center' }}>
+                <div style={{ 
+                  display: 'flex', 
+                  flexWrap: 'wrap', 
+                  gap: '0.5rem', 
+                  justifyContent: 'center' 
+                }}>
                   {founder.skills.map((skill, skillIndex) => (
                     <span
                       key={skillIndex}
@@ -159,7 +205,12 @@ export default function Founders() {
                 </div>
               </div>
 
-              <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', marginBottom: '1.5rem' }}>
+              <div style={{ 
+                display: 'flex', 
+                gap: '0.75rem', 
+                justifyContent: 'center', 
+                marginBottom: '1.5rem' 
+              }}>
                 {founder.portfolio ? (
                   <a
                     href={founder.portfolio}
@@ -223,7 +274,11 @@ export default function Founders() {
                 )}
               </div>
 
-              <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+              <div style={{ 
+                display: 'flex', 
+                gap: '1rem', 
+                justifyContent: 'center' 
+              }}>
                 {founder.github && founder.github !== '#' && (
                   <a
                     href={founder.github}
@@ -238,21 +293,22 @@ export default function Founders() {
                       borderRadius: '50%',
                       backgroundColor: 'rgba(255, 255, 255, 0.1)',
                       transition: 'all 0.3s ease',
-                      color: 'rgba(255,255,255,0.7)'
+                      color: 'rgba(255,255,255,0.7)',
+                      border: '1px solid rgba(255, 255, 255, 0.1)'
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.backgroundColor = '#3b82f6'
                       e.currentTarget.style.color = 'white'
+                      e.currentTarget.style.borderColor = '#3b82f6'
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)'
                       e.currentTarget.style.color = 'rgba(255,255,255,0.7)'
+                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
                     }}
                     aria-label="GitHub"
                   >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                    </svg>
+<|open|>argument key="new_string" type="string"<|sep|>                    <LinkIcon size={18} />
                   </a>
                 )}
                 {founder.linkedin && founder.linkedin !== '#' && (
@@ -269,23 +325,22 @@ export default function Founders() {
                       borderRadius: '50%',
                       backgroundColor: 'rgba(255, 255, 255, 0.1)',
                       transition: 'all 0.3s ease',
-                      color: 'rgba(255,255,255,0.7)'
+                      color: 'rgba(255,255,255,0.7)',
+                      border: '1px solid rgba(255, 255, 255, 0.1)'
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.backgroundColor = '#3b82f6'
                       e.currentTarget.style.color = 'white'
+                      e.currentTarget.style.borderColor = '#3b82f6'
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)'
                       e.currentTarget.style.color = 'rgba(255,255,255,0.7)'
+                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
                     }}
                     aria-label="LinkedIn"
                   >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                      <rect x="2" y="9" width="4" height="12"></rect>
-                      <circle cx="4" cy="4" r="2"></circle>
-                    </svg>
+                    <LinkIcon size={18} />
                   </a>
                 )}
               </div>

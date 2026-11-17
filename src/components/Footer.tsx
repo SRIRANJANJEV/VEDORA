@@ -1,5 +1,5 @@
-import { Mail } from 'lucide-react'
-import { Link, useLocation } from 'react-router-dom'
+import { Mail, MapPin, Phone } from 'lucide-react'
+import { useLocation } from 'react-router-dom'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
@@ -73,7 +73,7 @@ export default function Footer() {
             </p>
             <div style={{ display: 'flex', gap: '1rem' }}>
               <a
-                href="mailto:contact@vedora.com"
+                href="mailto:vedorabuildofficial@gmail.com"
                 style={{
                   width: '2.5rem',
                   height: '2.5rem',
@@ -273,58 +273,10 @@ export default function Footer() {
                   Contact
                 </button>
               </li>
-              <li>
-                <Link
-                  to="/promotion-partner"
-                  style={{
-                    color: 'rgba(255, 255, 255, 0.6)',
-                    transition: 'color 0.2s',
-                    fontSize: '0.875rem',
-                    background: 'none',
-                    border: 'none',
-                    cursor: 'pointer',
-                    padding: 0,
-                    textAlign: 'left',
-                    textDecoration: 'none',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.color = 'white'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.color = 'rgba(255, 255, 255, 0.6)'
-                  }}
-                >
-                  Promotion Partner
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/wall-of-love"
-                  style={{
-                    color: 'rgba(255, 255, 255, 0.6)',
-                    transition: 'color 0.2s',
-                    fontSize: '0.875rem',
-                    background: 'none',
-                    border: 'none',
-                    cursor: 'pointer',
-                    padding: 0,
-                    textAlign: 'left',
-                    textDecoration: 'none',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.color = 'white'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.color = 'rgba(255, 255, 255, 0.6)'
-                  }}
-                >
-                  Wall of Love
-                </Link>
-              </li>
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* Contact Info */}
           <div>
             <h3
               style={{
@@ -338,17 +290,26 @@ export default function Footer() {
             >
               Contact
             </h3>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              <li style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.875rem' }}>
-                vedorabuildofficial@gmail.com
-              </li>
-              <li style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.875rem' }}>
-                +91 9840468688
-              </li>
-              <li style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.875rem' }}>
-                India, Tamilnadu, Salem
-              </li>
-            </ul>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <Mail size={16} style={{ color: 'rgba(255, 255, 255, 0.5)' }} />
+                <span style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.875rem' }}>
+                  vedorabuildofficial@gmail.com
+                </span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <Phone size={16} style={{ color: 'rgba(255, 255, 255, 0.5)' }} />
+                <span style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.875rem' }}>
+                  +91 9840468688
+                </span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <MapPin size={16} style={{ color: 'rgba(255, 255, 255, 0.5)' }} />
+                <span style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.875rem' }}>
+                  India, Tamilnadu, Salem
+                </span>
+              </div>
+            </div>
           </div>
         </div>
 

@@ -14,33 +14,36 @@ export default function Contact() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Section fades and scales in
-      gsap.from(sectionRef.current, {
-        scale: 0.95,
-        opacity: 0,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 80%',
-          end: 'top 20%',
-          scrub: 0.3, // Reduced for smoother performance
-        }
-      })
+      // Section fades and scales in with improved animation
+      if (sectionRef.current) {
+        gsap.from(sectionRef.current, {
+          opacity: 0,
+          y: 50,
+          duration: 1,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 80%',
+            end: 'top 20%',
+            scrub: 0.3,
+          }
+        })
+      }
 
-      // Form fades in with scale
-      gsap.from(formRef.current, {
-        scale: 0.9,
-        opacity: 0,
-        y: 30,
-        rotation: 0,
-        rotationX: 0,
-        rotationY: 0,
-        scrollTrigger: {
-          trigger: formRef.current,
-          start: 'top 85%',
-          end: 'top 50%',
-          scrub: 0.3, // Reduced for smoother performance
-        }
-      })
+      // Form fades in with improved animation
+      if (formRef.current) {
+        gsap.from(formRef.current, {
+          opacity: 0,
+          y: 40,
+          duration: 0.8,
+          delay: 0.2,
+          scrollTrigger: {
+            trigger: formRef.current,
+            start: 'top 85%',
+            end: 'top 50%',
+            scrub: 0.3,
+          }
+        })
+      }
     }, sectionRef)
 
     return () => ctx.revert()
@@ -88,75 +91,123 @@ export default function Contact() {
   }
 
   return (
-    <div ref={sectionRef} id="contact" className="section" style={{ minHeight: '100vh' }}>
+    <div ref={sectionRef} id="contact" className="section">
       <div className="section-content">
-        <h2>
-          Get In Touch
-        </h2>
-        <p style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto 3rem', fontSize: '1.2rem', color: 'rgba(255,255,255,0.7)' }}>
-          Ready to start your project? Contact us for a free consultation. We'll discuss your requirements, timeline, and how we can help achieve your goals.
-        </p>
+        <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+          <h2 style={{ marginBottom: '1rem' }}>
+            Get In Touch
+          </h2>
+          <p style={{ 
+            fontSize: '1.2rem', 
+            color: 'rgba(255,255,255,0.7)', 
+            textAlign: 'center', 
+            maxWidth: '800px', 
+            margin: '0 auto',
+            lineHeight: 1.6
+          }}>
+            Ready to start your project? Contact us for a free consultation. We'll discuss your requirements, timeline, and how we can help achieve your goals.
+          </p>
+        </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '3rem', maxWidth: '1200px', margin: '0 auto' }}>
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', 
+          gap: '3rem', 
+          maxWidth: '1200px', 
+          margin: '0 auto' 
+        }}>
           {/* Contact Information */}
           <div>
             <div className="whirl-card" style={{ marginBottom: '2rem' }}>
-              <h3 style={{ marginBottom: '1.5rem' }}>Contact Information</h3>
+              <h3 style={{ marginBottom: '1.5rem', fontSize: '1.3rem' }}>Contact Information</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                  <Mail size={24} style={{ color: '#3b82f6' }} />
+                  <div style={{
+                    width: '48px',
+                    height: '48px',
+                    borderRadius: '12px',
+                    background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: '0 4px 15px rgba(59, 130, 246, 0.3)'
+                  }}>
+                    <Mail size={20} color="white" />
+                  </div>
                   <div>
-                    <div style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.6)' }}>Email</div>
-                    <div style={{ fontSize: '1rem' }}>vedorabuildofficial@gmail.com</div>
+                    <div style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.6)' }}>Email</div>
+                    <div style={{ fontSize: '1rem', color: 'white' }}>vedorabuildofficial@gmail.com</div>
                   </div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                  <Phone size={24} style={{ color: '#3b82f6' }} />
+                  <div style={{
+                    width: '48px',
+                    height: '48px',
+                    borderRadius: '12px',
+                    background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: '0 4px 15px rgba(59, 130, 246, 0.3)'
+                  }}>
+                    <Phone size={20} color="white" />
+                  </div>
                   <div>
-                    <div style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.6)' }}>Phone</div>
-                    <div style={{ fontSize: '1rem' }}>+91 9840468688</div>
+                    <div style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.6)' }}>Phone</div>
+                    <div style={{ fontSize: '1rem', color: 'white' }}>+91 9840468688</div>
                   </div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                  <MapPin size={24} style={{ color: '#3b82f6' }} />
+                  <div style={{
+                    width: '48px',
+                    height: '48px',
+                    borderRadius: '12px',
+                    background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: '0 4px 15px rgba(59, 130, 246, 0.3)'
+                  }}>
+                    <MapPin size={20} color="white" />
+                  </div>
                   <div>
-                    <div style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.6)' }}>Location</div>
-                    <div style={{ fontSize: '1rem' }}>India, Tamilnadu, Salem</div>
+                    <div style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.6)' }}>Location</div>
+                    <div style={{ fontSize: '1rem', color: 'white' }}>India, Tamilnadu, Salem</div>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="whirl-card">
-              <h3 style={{ marginBottom: '1rem' }}>Frequently Asked Questions</h3>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <h3 style={{ marginBottom: '1.5rem', fontSize: '1.3rem' }}>Frequently Asked Questions</h3>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 <div>
-                  <div style={{ fontWeight: 600, marginBottom: '0.5rem', color: '#3b82f6' }}>What is your typical project timeline?</div>
-                  <div style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)' }}>
+                  <div style={{ fontWeight: 600, marginBottom: '0.5rem', color: '#3b82f6', fontSize: '0.95rem' }}>What is your typical project timeline?</div>
+                  <div style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)', lineHeight: 1.6 }}>
                     Project timelines vary based on scope and complexity. We provide detailed estimates during the discovery phase and work with you to establish realistic milestones.
                   </div>
                 </div>
                 <div>
-                  <div style={{ fontWeight: 600, marginBottom: '0.5rem', color: '#3b82f6' }}>Do you work with startups?</div>
-                  <div style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)' }}>
+                  <div style={{ fontWeight: 600, marginBottom: '0.5rem', color: '#3b82f6', fontSize: '0.95rem' }}>Do you work with startups?</div>
+                  <div style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)', lineHeight: 1.6 }}>
                     Yes, we work with companies of all sizes. We offer flexible engagement models and can adapt to your budget and timeline requirements.
                   </div>
                 </div>
                 <div>
-                  <div style={{ fontWeight: 600, marginBottom: '0.5rem', color: '#3b82f6' }}>What technologies do you specialize in?</div>
-                  <div style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)' }}>
+                  <div style={{ fontWeight: 600, marginBottom: '0.5rem', color: '#3b82f6', fontSize: '0.95rem' }}>What technologies do you specialize in?</div>
+                  <div style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)', lineHeight: 1.6 }}>
                     We specialize in modern web technologies including React, Node.js, Python, Java, and Go. We work with cloud platforms like AWS, Azure, and GCP, and databases including PostgreSQL, MongoDB, and Redis.
                   </div>
                 </div>
                 <div>
-                  <div style={{ fontWeight: 600, marginBottom: '0.5rem', color: '#3b82f6' }}>Do you provide ongoing support?</div>
-                  <div style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)' }}>
+                  <div style={{ fontWeight: 600, marginBottom: '0.5rem', color: '#3b82f6', fontSize: '0.95rem' }}>Do you provide ongoing support?</div>
+                  <div style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)', lineHeight: 1.6 }}>
                     Yes, we offer maintenance and support packages with flexible options. Support includes bug fixes, security updates, and assistance with feature enhancements.
                   </div>
                 </div>
                 <div>
-                  <div style={{ fontWeight: 600, marginBottom: '0.5rem', color: '#3b82f6' }}>How do you handle intellectual property?</div>
-                  <div style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)' }}>
+                  <div style={{ fontWeight: 600, marginBottom: '0.5rem', color: '#3b82f6', fontSize: '0.95rem' }}>How do you handle intellectual property?</div>
+                  <div style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)', lineHeight: 1.6 }}>
                     All work product and intellectual property created during our engagement belongs to you. We use standard agreements that clearly assign IP rights to our clients.
                   </div>
                 </div>
@@ -166,7 +217,7 @@ export default function Contact() {
 
           {/* Contact Form */}
           <div ref={formRef} className="whirl-card">
-            <h3 style={{ marginBottom: '1.5rem' }}>Send Us a Message</h3>
+            <h3 style={{ marginBottom: '1.5rem', fontSize: '1.3rem' }}>Send Us a Message</h3>
             <p style={{ marginBottom: '1.5rem', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>
               We will respond within 16 hours
             </p>
@@ -190,6 +241,15 @@ export default function Contact() {
                     color: 'white',
                     fontSize: '1rem',
                     outline: 'none',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onFocus={(e) => {
+                    e.currentTarget.style.borderColor = '#3b82f6'
+                    e.currentTarget.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.1)'
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'
+                    e.currentTarget.style.boxShadow = 'none'
                   }}
                 />
               </div>
@@ -212,6 +272,15 @@ export default function Contact() {
                     color: 'white',
                     fontSize: '1rem',
                     outline: 'none',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onFocus={(e) => {
+                    e.currentTarget.style.borderColor = '#3b82f6'
+                    e.currentTarget.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.1)'
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'
+                    e.currentTarget.style.boxShadow = 'none'
                   }}
                 />
               </div>
@@ -234,6 +303,15 @@ export default function Contact() {
                     color: 'white',
                     fontSize: '1rem',
                     outline: 'none',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onFocus={(e) => {
+                    e.currentTarget.style.borderColor = '#3b82f6'
+                    e.currentTarget.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.1)'
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'
+                    e.currentTarget.style.boxShadow = 'none'
                   }}
                 />
               </div>
@@ -255,6 +333,15 @@ export default function Contact() {
                     color: 'white',
                     fontSize: '1rem',
                     outline: 'none',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onFocus={(e) => {
+                    e.currentTarget.style.borderColor = '#3b82f6'
+                    e.currentTarget.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.1)'
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'
+                    e.currentTarget.style.boxShadow = 'none'
                   }}
                 />
               </div>
@@ -278,21 +365,46 @@ export default function Contact() {
                     fontSize: '1rem',
                     resize: 'vertical',
                     outline: 'none',
+                    transition: 'all 0.3s ease',
+                    fontFamily: 'inherit'
+                  }}
+                  onFocus={(e) => {
+                    e.currentTarget.style.borderColor = '#3b82f6'
+                    e.currentTarget.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.1)'
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'
+                    e.currentTarget.style.boxShadow = 'none'
                   }}
                 />
               </div>
               <button
                 type="submit"
                 className="hero-cta"
-                style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', marginTop: '0.5rem' }}
+                style={{ 
+                  width: '100%', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center', 
+                  gap: '0.5rem', 
+                  marginTop: '0.5rem' 
+                }}
               >
                 <Send size={20} />
                 Send Message
               </button>
               {status && (
-                <p style={{ textAlign: 'center', color: '#3b82f6', fontSize: '0.9rem', padding: '0.75rem', background: 'rgba(59, 130, 246, 0.1)', borderRadius: '8px' }}>
+                <div style={{
+                  padding: '1rem',
+                  background: 'rgba(59, 130, 246, 0.1)',
+                  border: '1px solid rgba(59, 130, 246, 0.3)',
+                  borderRadius: '8px',
+                  color: '#3b82f6',
+                  fontSize: '0.9rem',
+                  textAlign: 'center'
+                }}>
                   {status}
-                </p>
+                </div>
               )}
             </form>
           </div>
